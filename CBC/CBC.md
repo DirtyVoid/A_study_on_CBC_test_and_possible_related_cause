@@ -84,7 +84,7 @@ When a person has high hematocrit levels they tend to present with these sympt
 ##### What does this indicate?
 A higher than normal hematocrit can indicate:
 - Dehydration
-- A disorder, such as polycythemia vera, that causes your body to produce too many red blood cells
+- A disorder, such as polycythemia vera, that causes your body to produWce too many red blood cells
 - Lung or pulmonary disease
 - Heart disease
 - Kidney cancer
@@ -157,3 +157,9 @@ Many conditions cause your eosinophil counts to increase in your blood. Some con
 - Eosinophilic gastrointestinal disorders (EGID): EGID includes eosinophilic esophagitis, which affects your esophagus, as well as disorders that affect your colon (large intestine), stomach and small intestine.
 - Eosinophilic granulomatosis with polyangiitis (EGPA): This condition, also known as Churg-Strauss syndrome, affects your lungs, heart, sinuses and other organs.
 - Hypereosinophilic syndrome: This is a rare group of conditions linked to continuously high levels of eosinophilia. Hypereosinophilic syndrome typically affects your heart, central nervous system, skin and respiratory tract.
+
+##### Extracted from:
+- https://mayoclinic.org/symptoms/eosinophilia/basics/definition/sym-20050752#:~:text=Eosinophilia%20(e-o-sin-o,an%20allergic%20reaction%20or%20cancer.
+- https://my.clevelandclinic.org/health/diseases/17710-eosinophilia
+- https://www.webmd.com/asthma/eosinophil-count-facts
+- https://www.merckmanuals.com/en-ca/home/blood-disorders/white-blood-cell-disorders/eosinophilic-disorders

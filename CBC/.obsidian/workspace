@@ -10,7 +10,7 @@
           "type": "markdown",
           "state": {
             "file": "CBC.md",
-            "mode": "preview",
+            "mode": "source",
             "source": false
           }
         }
@@ -134,7 +134,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 100
   },
   "active": "985b3eef32029edb",
   "lastOpenFiles": [
