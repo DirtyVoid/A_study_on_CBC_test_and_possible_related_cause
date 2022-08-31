@@ -1,0 +1,446 @@
+<!doctype html>
+<html>
+    <head>
+        <title>CBC</title>
+        <meta charset='utf-8'/>
+        <style>
+ .ͼ1.cm-editor.cm-focused {outline: 1px dotted #212121;}
+.ͼ1.cm-editor {position: relative !important; box-sizing: border-box; display: flex !important; flex-direction: column;}
+.ͼ1 .cm-scroller {display: flex !important; align-items: flex-start !important; font-family: monospace; line-height: 1.4; height: 100%; overflow-x: auto; position: relative; z-index: 0;}
+.ͼ1 .cm-content[contenteditable=true] {-webkit-user-modify: read-write-plaintext-only;}
+.ͼ1 .cm-content {margin: 0; flex-grow: 2; min-height: 100%; display: block; white-space: pre; word-wrap: normal; box-sizing: border-box; padding: 4px 0; outline: none;}
+.ͼ1 .cm-lineWrapping {white-space: pre-wrap; white-space: break-spaces; word-break: break-word; overflow-wrap: anywhere;}
+.ͼ2 .cm-content {caret-color: black;}
+.ͼ3 .cm-content {caret-color: white;}
+.ͼ1 .cm-line {display: block; padding: 0 2px 0 4px;}
+.ͼ1 .cm-selectionLayer {z-index: -1; contain: size style;}
+.ͼ1 .cm-selectionBackground {position: absolute;}
+.ͼ2 .cm-selectionBackground {background: #d9d9d9;}
+.ͼ3 .cm-selectionBackground {background: #222;}
+.ͼ2.cm-focused .cm-selectionBackground {background: #d7d4f0;}
+.ͼ3.cm-focused .cm-selectionBackground {background: #233;}
+.ͼ1 .cm-cursorLayer {z-index: 100; contain: size style; pointer-events: none;}
+.ͼ1.cm-focused .cm-cursorLayer {animation: steps(1) cm-blink 1.2s infinite;}
+@keyframes cm-blink {50% {visibility: hidden;}}
+@keyframes cm-blink2 {50% {visibility: hidden;}}
+.ͼ1 .cm-cursor, .ͼ1 .cm-dropCursor {position: absolute; border-left: 1.2px solid black; margin-left: -0.6px; pointer-events: none;}
+.ͼ1 .cm-cursor {display: none;}
+.ͼ3 .cm-cursor {border-left-color: #444;}
+.ͼ1.cm-focused .cm-cursor {display: block;}
+.ͼ2 .cm-activeLine {background-color: #f3f9ff;}
+.ͼ3 .cm-activeLine {background-color: #223039;}
+.ͼ2 .cm-specialChar {color: red;}
+.ͼ3 .cm-specialChar {color: #f78;}
+.ͼ1 .cm-gutters {display: flex; height: 100%; box-sizing: border-box; left: 0; z-index: 200;}
+.ͼ2 .cm-gutters {background-color: #f5f5f5; color: #6c6c6c; border-right: 1px solid #ddd;}
+.ͼ3 .cm-gutters {background-color: #333338; color: #ccc;}
+.ͼ1 .cm-gutter {display: flex !important; flex-direction: column; flex-shrink: 0; box-sizing: border-box; min-height: 100%; overflow: hidden;}
+.ͼ1 .cm-gutterElement {box-sizing: border-box;}
+.ͼ1 .cm-lineNumbers .cm-gutterElement {padding: 0 3px 0 5px; min-width: 20px; text-align: right; white-space: nowrap;}
+.ͼ2 .cm-activeLineGutter {background-color: #e2f2ff;}
+.ͼ3 .cm-activeLineGutter {background-color: #222227;}
+.ͼ1 .cm-panels {box-sizing: border-box; position: sticky; left: 0; right: 0;}
+.ͼ2 .cm-panels {background-color: #f5f5f5; color: black;}
+.ͼ2 .cm-panels-top {border-bottom: 1px solid #ddd;}
+.ͼ2 .cm-panels-bottom {border-top: 1px solid #ddd;}
+.ͼ3 .cm-panels {background-color: #333338; color: white;}
+.ͼ1 .cm-tab {display: inline-block; overflow: hidden; vertical-align: bottom;}
+.ͼ1 .cm-widgetBuffer {vertical-align: text-top; height: 1em; display: inline;}
+.ͼ1 .cm-placeholder {color: #888; display: inline-block; vertical-align: top;}
+.ͼ1 .cm-button {vertical-align: middle; color: inherit; font-size: 70%; padding: .2em 1em; border-radius: 1px;}
+.ͼ2 .cm-button:active {background-image: linear-gradient(#b4b4b4, #d0d3d6);}
+.ͼ2 .cm-button {background-image: linear-gradient(#eff1f5, #d9d9df); border: 1px solid #888;}
+.ͼ3 .cm-button:active {background-image: linear-gradient(#111, #333);}
+.ͼ3 .cm-button {background-image: linear-gradient(#393939, #111); border: 1px solid #888;}
+.ͼ1 .cm-textfield {vertical-align: middle; color: inherit; font-size: 70%; border: 1px solid silver; padding: .2em .5em;}
+.ͼ2 .cm-textfield {background-color: white;}
+.ͼ3 .cm-textfield {border: 1px solid #555; background-color: inherit;}
+.ͼ1 .cm-tooltip {z-index: 100;}
+.ͼ2 .cm-tooltip {border: 1px solid #bbb; background-color: #f5f5f5;}
+.ͼ2 .cm-tooltip-section:not(:first-child) {border-top: 1px solid #bbb;}
+.ͼ3 .cm-tooltip {background-color: #333338; color: white;}
+.ͼ1 .cm-tooltip-arrow:before, .ͼ1 .cm-tooltip-arrow:after {content: ''; position: absolute; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent;}
+.ͼ1 .cm-tooltip-above .cm-tooltip-arrow:before {border-top: 7px solid #bbb;}
+.ͼ1 .cm-tooltip-above .cm-tooltip-arrow:after {border-top: 7px solid #f5f5f5; bottom: 1px;}
+.ͼ1 .cm-tooltip-above .cm-tooltip-arrow {bottom: -7px;}
+.ͼ1 .cm-tooltip-below .cm-tooltip-arrow:before {border-bottom: 7px solid #bbb;}
+.ͼ1 .cm-tooltip-below .cm-tooltip-arrow:after {border-bottom: 7px solid #f5f5f5; top: 1px;}
+.ͼ1 .cm-tooltip-below .cm-tooltip-arrow {top: -7px;}
+.ͼ1 .cm-tooltip-arrow {height: 7px; width: 14px; position: absolute; z-index: -1; overflow: hidden;}
+.ͼ3 .cm-tooltip .cm-tooltip-arrow:before {border-top-color: #333338; border-bottom-color: #333338;}
+.ͼ3 .cm-tooltip .cm-tooltip-arrow:after {border-top-color: transparent; border-bottom-color: transparent;}
+.ͼ1 .cm-foldPlaceholder {background-color: #eee; border: 1px solid #ddd; color: #888; border-radius: .2em; margin: 0 1px; padding: 0 1px; cursor: pointer;}
+.ͼ1 .cm-foldGutter span {padding: 0 1px; cursor: pointer;}
+.ͼ14 .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼ13 .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼ12 .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼ11 .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼ10 .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼz .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼy .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼx .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼw .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼv .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼu .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼt .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼs .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼr .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+.ͼq .cm-content {white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere;}
+   .lt-underline {
+  cursor: pointer;
+  transition: background-color 100ms ease-out;
+}
+
+.lt-underline.lt-minor {
+  box-shadow: inset 0 -2px #e9b35f;
+}
+
+.lt-underline.lt-major {
+  box-shadow: inset 0 -2px #da615c;
+}
+
+.lt-underline.lt-style {
+  box-shadow: inset 0 -2px #8981f3;
+}
+
+.lt-underline.lt-minor:hover {
+  background-color: #e9b35f21;
+}
+
+.lt-underline.lt-major:hover {
+  background-color: #da615c21;
+}
+
+.lt-underline.lt-style:hover {
+  background-color: #8981f321;
+}
+
+@keyframes lineInserted {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.lt-predictions-container-glass.cm-tooltip,
+.lt-predictions-container.cm-tooltip,
+.lt-predictions-container-glass,
+.lt-predictions-container {
+  position: absolute;
+  animation-duration: 150ms;
+  animation-name: lineInserted;
+  font-family: var(--default-font);
+  font-size: 0.93rem;
+  padding: 12px 0 0;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  width: 300px;
+  line-height: 1.5;
+  z-index: var(--layer-popover);
+  overflow: hidden;
+}
+
+.lt-predictions-container-glass {
+  background: hsla(0, 0%, 100%, 0.25);
+  backdrop-filter: blur(12px);
+}
+
+.lt-predictions-container > button {
+  transition-delay: 0.5s;
+}
+
+.lt-buttoncontainer:not(:empty) {
+  padding: 10px 12px 0;
+}
+
+.lt-buttoncontainer > button {
+  border: 1px solid var(--background-modifier-border);
+  font-size: 1rem;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  padding: 4px 10px;
+}
+
+.lt-title {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  padding: 0 12px;
+}
+
+.lt-message {
+  padding: 0 12px;
+  display: block;
+}
+
+.lt-ignorecontainer {
+  padding-top: 10px;
+  display: flex;
+}
+
+.lt-status-bar-btn {
+  height: 100%;
+  display: flex;
+  cursor: pointer;
+  line-height: 1;
+  align-items: center;
+}
+
+.lt-status-bar-check-icon {
+  display: block;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+.lt-ignore-btn {
+  margin: 0;
+  padding: 12px;
+  display: flex;
+  width: 100%;
+  text-align: left;
+  border-radius: 0;
+  align-items: center;
+  line-height: 1;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.lt-ignore-btn > span {
+  display: flex;
+}
+
+.lt-ignore-btn > span:last-child {
+  margin-left: 5px;
+}
+
+.lt-minor .lt-title > span {
+  box-shadow: inset 0 -2px #e9b35f88;
+}
+
+.lt-major .lt-title > span {
+  box-shadow: inset 0 -2px #da615c88;
+}
+
+.lt-style .lt-title > span {
+  box-shadow: inset 0 -2px #8981f388;
+}
+
+.lt-loading > svg {
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+ .HyperMD-table-row span.cm-inline-code {
+  font-size: 100%;
+}
+
+.widget-icon {
+  width: 20px;
+  height: 20px;
+  fill: var(--text-muted);
+}
+
+.widget-icon:hover {
+  fill: var(--text-normal);
+}
+
+.advanced-tables-csv-export textarea {
+  height: 200px;
+  width: 100%;
+}
+
+.advanced-tables-donation {
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.advanced-tables-donate-button {
+  margin: 10px;
+}
+ 
+.pandoc-plugin-error {
+    color: red;
+}
+ .setting-item.ex-setting-item {
+    border-top: unset;
+    padding-top: 0;
+}
+
+*[hidden] {
+    display: none;
+}undefined
+</style>
+    </head>
+    <body>
+<h1 data-heading="COMPLETE BLOOD COUNT TEST (CBC)">COMPLETE BLOOD COUNT TEST (CBC)</h1>
+<h2 data-heading="WHAT IS CBC?">WHAT IS CBC?</h2>
+<p>A complete blood count is a test that counts the cells that make up your blood: red blood cells, white blood cells, and platelets.</p>
+<h2 data-heading="WHY DOES THE DOCTOR SUGGEST THIS TEST?">WHY DOES THE DOCTOR SUGGEST THIS TEST?</h2>
+<p>As a part of routine checkup to evaluate the blood or to:</p>
+<ul>
+<li>To check for anemia</li>
+<li>To find heath issue relating to symptoms like weakness, fever, bruising or feeling tired. </li>
+<li>To see how medications, medical conditions, or treatments like chemotherapy are affecting the blood</li>
+</ul>
+<p>Note:- The list maybe not be limited to this. This to just obtain the general idea. </p>
+<p>Above contents directly extracted From: <a rel="noopener" class="external-link" href="https://www.webmd.com/a-to-z-guides/complete-blood-count" target="_blank">https://www.webmd.com/a-to-z-guides/complete-blood-count</a></p>
+<h2 data-heading="CBC RESULTS IN QUESTION">CBC RESULTS IN QUESTION</h2>
+<p><img alt="Pasted image 20220831130940.png" src="Pasted image 20220831130940.png" class="internal-embed"></p>
+<p>Comparing the result to reference values reveals:<br>
+Note:- " this sign in table means same as above<br>
+| Name                  | Result    | Reference value | Difference             |<br>
+| --------------------- | --------- | --------------- | ---------------------- |<br>
+| Hemoglobin            | 19.1      | 13.3-17.0       | +2.10 (from upper end) |<br>
+| Hematocrit            | 55        | 40-54           | +1.00 (")              |<br>
+| RBC Count             | 6.47      | 4.5-6.0         | +0.47 (")              |<br>
+| ----------------      | --------- | --------------- | ---------------------  |<br>
+| Red Cell Indices      | --------- | --------------- | ---------------------  |<br>
+| MCV                   |           |                 | Within reference       |<br>
+| MCH                   |           |                 | "                      |<br>
+| MCHC                  |           |                 | "                      |<br>
+| RDW-CV                | 15.5      | 11.5-14.5       | +1.00 (from upper end) |<br>
+| RDW-SD                |           |                 | Within reference       |<br>
+| ----------------      | --------- | --------------- | ---------------------  |<br>
+| Total Leukocyte Count | 12.53     | 4.0-11.0        | +1.53 (from upper end) |<br>
+| ----------------      | --------- | --------------- | ---------------------  |<br>
+| Diff. Leukocyte Count | --------- | --------------- | ---------------------  |<br>
+| Neutrophil            |           |                 | Within reference       |<br>
+| Lymphocyte            |           |                 | "                      |<br>
+| Monocyte              |           |                 | "                      |<br>
+| Eosinophil            | 14.1      | 1-6             | +8.10 (from upper end) |<br>
+| Basophil              |           |                 | Within reference       |<br>
+| ----------------      | --------- | --------------- | ---------------------  |<br>
+| Abs. Leukocyte Count  | --------- | --------------- | ---------------------  |<br>
+| Neutrophil            |           |                 | Within reference       |<br>
+| Lymphocyte            |           |                 | "                      |<br>
+| Monocyte              |           |                 | "                      |<br>
+| Eosinophil            | 1.77      | 0.04-0.45       | +1.32 (from upper end) |<br>
+| Basophil              | 0.12      | 0.01-0.10       | +0.02 (from upper end)                       |</p>
+<h3 data-heading="SUMMARY OF THE TABLE">SUMMARY OF THE TABLE</h3>
+<h4 data-heading="Hemoglobin is high: +2.10 (from upper end)">Hemoglobin is high: +2.10 (from upper end)</h4>
+<h5 data-heading="Common reasons">Common reasons</h5>
+<p>A high hemoglobin count occurs&nbsp;<strong>most commonly when your body requires an increased oxygen-carrying capacity</strong>, usually because: You smoke. You live at a high altitude and your red blood cell production naturally increases to compensate for the lower oxygen supply there</p>
+<h5 data-heading="Less Common reasons">Less Common reasons</h5>
+<p><strong>High Hemoglobin count</strong> occurs less commonly when:<br>
+Your <strong>red blood cell production</strong> increases to make up for <strong>chronically low blood oxygen levels due to poor heart or lung function</strong>.<br>
+Your bone marrow produces too many red blood cells.<br>
+<strong>You've taken drugs or hormones</strong>, most commonly erythropoietin (EPO), that stimulate red blood cell production. You're not likely to get a high hemoglobin count from EPO given to you for chronic kidney disease. But EPO doping — getting injections to enhance athletic performance — can cause a high hemoglobin count.</p>
+<p>If you have a high hemoglobin count <strong>without other abnormalities</strong>, it's unlikely to indicate a related serious condition. Conditions that can cause a high hemoglobin count include:</p>
+<ul>
+<li>Congenital heart disease in adults</li>
+<li>COPD (chronic obstructive pulmonary disease) worsening of symptoms</li>
+<li>Dehydration</li>
+<li>Emphysema</li>
+<li>Heart failure</li>
+<li>Kidney cancer</li>
+<li>Liver cancer</li>
+<li>Polycythemia vera</li>
+</ul>
+<h5 data-heading="Extracted from:">Extracted from:</h5>
+<p><a rel="noopener" class="external-link" href="https://www.mayoclinic.org/symptoms/high-hemoglobin-count/basics/causes/sym-20050862#:~:text=A%20high%20hemoglobin%20count%20occurs,the%20lower%20oxygen%20supply%20there" target="_blank">https://www.mayoclinic.org/symptoms/high-hemoglobin-count/basics/causes/sym-20050862#:~:text=A%20high%20hemoglobin%20count%20occurs,the%20lower%20oxygen%20supply%20there</a></p>
+<h4 data-heading="Hematocrit  is high:  +1.00 (from upper end)">Hematocrit  is high:  +1.00 (from upper end)</h4>
+<p>Hematocrit is the percentage of blood cells in a person’s blood volume</p>
+<h5 data-heading="Symptoms">Symptoms</h5>
+<p>When a person has high hematocrit levels they&nbsp;tend to&nbsp;present with these symptoms:</p>
+<ul>
+<li>flushed skin</li>
+<li>dizziness</li>
+<li>vision problems</li>
+<li>headaches</li>
+<li>enlarged spleen</li>
+</ul>
+<h5 data-heading="What does this indicate?">What does this indicate?</h5>
+<p>A higher than normal hematocrit can indicate:</p>
+<ul>
+<li>Dehydration</li>
+<li>A disorder, such as polycythemia vera, that causes your body to produce too many red blood cells</li>
+<li>Lung or pulmonary disease</li>
+<li>Heart disease</li>
+<li>Kidney cancer</li>
+<li>Genetic disease</li>
+</ul>
+<h5 data-heading="Extracted from:">Extracted from:</h5>
+<ul>
+<li><a rel="noopener" class="external-link" href="https://www.mayoclinic.org/tests-procedures/hematocrit/about/pac-20384728#:~:text=A%20higher%20than%20normal%20hematocrit,Lung%20or%20heart%20disease" target="_blank">https://www.mayoclinic.org/tests-procedures/hematocrit/about/pac-20384728#:~:text=A%20higher%20than%20normal%20hematocrit,Lung%20or%20heart%20disease</a></li>
+<li><a rel="noopener" class="external-link" href="https://www.medicalnewstoday.com/articles/hematocrit-levels#high-hematocrit" target="_blank">https://www.medicalnewstoday.com/articles/hematocrit-levels#high-hematocrit</a></li>
+</ul>
+<h4 data-heading="Red Blood Cell count(RBC count) is high: +0.47 (from upper end)">Red Blood Cell count(RBC count) is high: +0.47 (from upper end)</h4>
+<h5 data-heading="What does this indicate?">What does this indicate?</h5>
+<p>A high red blood cell count can be a sign of:</p>
+<ul>
+<li>Dehydration</li>
+<li>Heart disease</li>
+<li>Polycythemia vera, a bone marrow disease that causes too many red blood cells to be made</li>
+<li>Scarring of the lungs, often due to cigarette smoking</li>
+<li>Lung disease</li>
+<li>Kidney cancer</li>
+</ul>
+<h5 data-heading="Extracted from:">Extracted from:</h5>
+<ul>
+<li><a rel="noopener" class="external-link" href="https://medlineplus.gov/lab-tests/red-blood-cell-rbc-count/#:~:text=A%20high%20red%20blood%20cell%20count%20can%20be%20a%20sign,blood%20cells%20to%20be%20made" target="_blank">https://medlineplus.gov/lab-tests/red-blood-cell-rbc-count/#:~:text=A%20high%20red%20blood%20cell%20count%20can%20be%20a%20sign,blood%20cells%20to%20be%20made</a></li>
+</ul>
+<h4 data-heading="RDW-CV from Red Cell Indices section is high: +1.00 (from upper end)">RDW-CV from Red Cell Indices section is high: +1.00 (from upper end)</h4>
+<pre><code>RDW-CV = (Standard deviation of MCV ÷ MCV) × 100 
+MCV = Mean corpuscular volume 
+RDW-CV = Coefficient of Variation(CV) of Red Cell Distribution Width(RDW)
+RDW-SD=an actual measurement of the width of the red cell distribution curve
+</code><button class="copy-code-button">Copy</button></pre>
+<p>Therefore, we can conclude that it is Normal RDW and&nbsp;high&nbsp;MCV.</p>
+<h5 data-heading="What does this conclusion indicate?">What does this conclusion indicate?</h5>
+<p>This can indicate a liver condition or alcohol abuse. Or, a person may have this result because they are on antiviral drugs or chemotherapy. If other blood characteristics are also affected, this can suggest aplastic anemia, a rare disorder caused by inadequate blood cell production. To confirm a diagnosis, a doctor will compare the results of the RDW test with those of the MCV measurement.</p>
+<h5 data-heading="Extracted from:">Extracted from:</h5>
+<ul>
+<li><a rel="noopener" class="external-link" href="https://healthmatters.io/understand-blood-test-results/red-cell-distribution-width#:~:text=Mathematically%2C%20the%20RDW%2DCV%20is,of%20a%20red%20blood%20cell" target="_blank">https://healthmatters.io/understand-blood-test-results/red-cell-distribution-width#:~:text=Mathematically%2C%20the%20RDW%2DCV%20is,of%20a%20red%20blood%20cell</a>.</li>
+</ul>
+<h4 data-heading="Eosinophil is high: +8.10 (from upper end)">Eosinophil is high: +8.10 (from upper end)</h4>
+<p>Eosinophilia is a higher than normal level of eosinophils.<br>
+Types:</p>
+<ul>
+<li>Blood eosinophilia </li>
+<li>Tissue eosinophilia</li>
+</ul>
+<h5 data-heading="What does it indicate?">What does it indicate?</h5>
+<p>This condition most often indicates:</p>
+<ul>
+<li>a parasitic infection or fungus</li>
+<li>an allergic reaction</li>
+<li>cancer</li>
+<li>Acute hypereosinophilic syndrome</li>
+<li>Eczema </li>
+<li>Leukemia</li>
+<li>A reaction to certain drugs</li>
+<li>Early stages of Cushing’s disease</li>
+<li>Autoimmune conditions</li>
+<li>Asthma</li>
+</ul>
+<h5 data-heading="Is eosinophilia serious?">Is eosinophilia serious?</h5>
+<p>Depending on your eosinophil count, eosinophilia can be mild, moderate or severe. High eosinophil levels can indicate a mild condition such as a drug reaction or allergy, or a severe condition could cause it, including some blood disorders. Sometimes, high numbers of eosinophils crowd together at specific areas of your body, causing medical conditions linked to inflammation that can affect multiple areas of your body.</p>
+<h5 data-heading="What causes eosinophilia?">What causes eosinophilia?</h5>
+<p>Many conditions cause your eosinophil counts to increase in your blood. Some conditions, like seasonal allergies, asthma and reactions to medications are very common, and often aren’t very serious. Infections, especially from parasites, can also lead to eosinophilia. Problems with immune regulation can also cause eosinophilia, including autoimmune diseases like inflammatory bowel disease, autoimmune myocarditis, vasculitis and sarcoidosis. Blood cancers that make these cells inappropriately can also cause eosinophilia. Finally, genetic changes that are hereditary (passed on by your biological parents) can cause eosinophilia.</p>
+<h5 data-heading="What happens if eosinophil is high?">What happens if eosinophil is high?</h5>
+<ul>
+<li>Eosinophilic cystitis: This is a bladder disorder.</li>
+<li>Eosinophilic fasciitis: This is a fascia disorder. Fascia is the connective tissue that runs throughout your body.</li>
+<li>Eosinophilic pneumonia: This disorder affects your lungs.</li>
+<li>Eosinophilic gastrointestinal disorders (EGID): EGID includes eosinophilic esophagitis, which affects your esophagus, as well as disorders that affect your colon (large intestine), stomach and small intestine.</li>
+<li>Eosinophilic granulomatosis with polyangiitis (EGPA): This condition, also known as Churg-Strauss syndrome, affects your lungs, heart, sinuses and other organs.</li>
+<li>Hypereosinophilic syndrome: This is a rare group of conditions linked to continuously high levels of eosinophilia. Hypereosinophilic syndrome typically affects your heart, central nervous system, skin and respiratory tract.</li>
+</ul>
+    </body>
+</html>
